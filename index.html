@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nadir Ali Khan | Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 5px solid cyan;
+      border-top: 5px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #222;
+    }
+
+    nav {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .logo {
+      font-size: 30px;
+      color: cyan;
+      font-weight: bold;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: cyan;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: cyan;
+      filter: blur(180px);
+      opacity: 0.2;
+      border-radius: 50%;
+    }
+
+    .hero img {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      border: 4px solid cyan;
+      object-fit: cover;
+      z-index: 2;
+      box-shadow: 0 0 30px cyan;
+    }
+
+    .hero h1 {
+      font-size: 70px;
+      margin-top: 30px;
+      z-index: 2;
+    }
+
+    .hero span {
+      color: cyan;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin-top: 20px;
+      line-height: 32px;
+      color: #ccc;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      z-index: 2;
+    }
+
+    .buttons button {
+      padding: 15px 35px;
+      margin: 10px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .hire {
+      background: cyan;
+      color: black;
+      font-weight: bold;
+    }
+
+    .cv {
+      background: transparent;
+      border: 2px solid cyan !important;
+      color: white;
+    }
+
+    .buttons button:hover {
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 120px 10%;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 50px;
+      color: cyan;
+      margin-bottom: 70px;
+    }
+
+    /* About */
+    .about-container {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-box {
+      background: #111;
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid #222;
+    }
+
+    .about-box h3 {
+      color: cyan;
+      margin-bottom: 10px;
+    }
+
+    .about-text {
+      line-height: 32px;
+      color: #ccc;
+      font-size: 18px;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #111;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid #222;
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: cyan;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      color: #bbb;
+      line-height: 28px;
+    }
+
+    /* Contact */
+    form {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 20px;
+      background: #111;
+      border: 1px solid #333;
+      color: white;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .send-btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      background: cyan;
+      color: black;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #222;
+      text-align: center;
+      padding: 30px;
+      color: #999;
+    }
+
+    @media(max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 45px;
+      }
+
+      .about-container {
+        grid-template-columns: 1fr;
+      }
+
+      .title {
+        font-size: 38px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <h1 style="margin-top:20px;color:cyan;">Loading Portfolio...</h1>
+  </div>
+
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <div class="logo">Nadir Ali Khan</div>
+
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+
+    <img src="https://i.ibb.co/9H6K6wD/profile.png" alt="Profile">
+
+    <h1>
+      Hi, I'm <span>Nadir Ali Khan</span>
+    </h1>
+
+    <p>
+      Professional Frontend & Web Developer creating responsive websites,
+      portfolio websites, business websites and modern web applications.
+    </p>
+
+    <div class="buttons">
+      <button class="hire">Hire Me</button>
+      <button class="cv">Download CV</button>
+    </div>
+
+  </section>
+
+  <!-- About -->
+  <section id="about">
+
+    <h2 class="title">About Me</h2>
+
+    <div class="about-container">
+
+      <div>
+        <p class="about-text">
+          I am Nadir Ali Khan, a professional frontend and web developer.
+          I create modern and premium websites with responsive layouts,
+          modern animations, clean UI design and user-friendly experiences.
+        </p>
+      </div>
+
+      <div class="about-box">
+        <h3>Experience</h3>
+        <p>1 Year Experience</p>
+
+        <br>
+
+        <h3>Profession</h3>
+        <p>Frontend Web Developer</p>
+
+        <br>
+
+        <h3>Location</h3>
+        <p>Karachi, Pakistan</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+
+    <h2 class="title">Skills</h2>
+
+    <div class="grid">
+
+      <div class="card"><h3>HTML</h3></div>
+      <div class="card"><h3>CSS</h3></div>
+      <div class="card"><h3>JavaScript</h3></div>
+    </div>
+
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+
+    <h2 class="title">Services</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Website Development</h3>
+        <p>Modern responsive websites for all devices.</p>
+      </div>
+
+      <div class="card">
+        <h3>Business Websites</h3>
+        <p>Professional business websites with premium UI.</p>
+      </div>
+
+      <div class="card">
+        <h3>Portfolio Websites</h3>
+        <p>Creative portfolio websites with animations.</p>
+      </div>
+
+      <div class="card">
+        <h3>Landing Pages</h3>
+        <p>Modern landing pages with high conversion UI.</p>
+      </div>
+
+      <div class="card">
+        <h3>Mobile Apps</h3>
+        <p>Responsive mobile app development.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+
+    <h2 class="title">Projects</h2>
+
+    <div class="grid">
+
+
+<div class="card">
+
+  <h3>Repair Shop Management System</h3>
+
+  <p>
+    A modern Repair Shop Management System designed to manage customer repairs,
+    inventory tracking, billing system, technician workflow and repair status
+    updates with a professional dashboard and responsive user interface.
+  </p>
+
+</div>
+
+</p>
+      </div>
+
+      <div class="card">
+        <h3>Business Website</h3>
+        <p>Professional business website with modern UI.</p>
+      </div>
+
+      <div class="card">
+        <h3>Portfolio Website</h3>
+        <p>Creative personal portfolio website with animations.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+
+    <h2 class="title">Contact Me</h2>
+
+    <form id="contactForm">
+
+      <input type="text" placeholder="Your Name" required>
+
+      <input type="email" placeholder="Your Email" required>
+
+      <textarea rows="6" placeholder="Your Message" required></textarea>
+
+      <button type="submit" class="send-btn" id="sendBtn">
+        Send Message
+      </button>
+
+    </form>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 Nadir Ali Khan — All Rights Reserved.
+  </footer>
+
+  <script>
+
+    // Loader
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+      }, 2500);
+    });
+
+    // Message Button
+    const form = document.getElementById("contactForm");
+    const btn = document.getElementById("sendBtn");
+
+    form.addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      btn.innerHTML = "Sending...";
+      btn.disabled = true;
+
+      setTimeout(() => {
+
+        btn.innerHTML = "Message Sent ✅";
+
+        alert("Message Sent Successfully!");
+
+        form.reset();
+
+        btn.disabled = false;
+
+        btn.innerHTML = "Send Message";
+
+      }, 2500);
+
+    });
+
+  </script>
+
+</body>
+</html>
